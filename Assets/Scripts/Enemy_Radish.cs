@@ -15,7 +15,7 @@ public class Enemy_Radish : Enemy
     [SerializeField] private float aggroTime;
     private float aggroTimeCounter;
 
-    private bool aggresive;
+    
     protected override void Start()
     {
         base.Start();

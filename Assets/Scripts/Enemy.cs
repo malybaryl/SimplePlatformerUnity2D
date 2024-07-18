@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : DamagingObject
 {
     protected Animator anim;
     protected Rigidbody2D rb;
@@ -24,6 +24,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float speed;
     [SerializeField] protected float idleTime;
     protected float idleTimeCounter;
+    protected bool canMove = true;
+    protected bool aggresive;
+
+    [Header("General specifics")]
+    [SerializeField] private LayerMask whatIsPlayer;
+    protected bool playerDetected;
+
 
     protected virtual void Start()
     {
@@ -55,16 +62,6 @@ public class Enemy : MonoBehaviour
             wasHited = true;
         }
     }
-   
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-    if (collision.GetComponent<Player>() != null)
-        {
-            Player player = collision.GetComponent<Player>();
-            player.Knockback(transform);
-        }
-    }
 
     protected virtual void Flip()
     {
@@ -76,13 +73,18 @@ public class Enemy : MonoBehaviour
     {
         groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGroud);
         wallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGroud);
+        playerDetected = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, 25, whatIsPlayer);
 
     }
 
    protected virtual void OnDrawGizmos()
     {
-        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDirection, wallCheck.position.y)); 
+        if (groundCheck != null)
+            Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        
+        if (wallCheck != null)
+            Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDirection, wallCheck.position.y));
+        
     }
 
     public void DestroyMe()

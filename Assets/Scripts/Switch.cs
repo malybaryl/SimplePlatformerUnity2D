@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Switch : Trap
+public class Switch : DamagingObject
 {
     private Animator anim;
 

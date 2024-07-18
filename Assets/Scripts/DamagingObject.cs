@@ -4,7 +4,7 @@ using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Trap : MonoBehaviour
+public class DamagingObject : MonoBehaviour
 {
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {

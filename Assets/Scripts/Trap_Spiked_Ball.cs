@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trap_Spiked_Ball : Trap
+public class Trap_Spiked_Ball : DamagingObject
 {
     private Rigidbody2D rb;
     [SerializeField] private Vector2 pushDirection;
