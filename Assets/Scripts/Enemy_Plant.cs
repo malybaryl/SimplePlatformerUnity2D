@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class Enemy_Plant : Enemy
 {
+    [Header("Plant specifics")]
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private Transform bulletTransform;
+    [SerializeField]
+    private float bulletSpeed = 10f;
+    [SerializeField]
+    private bool facingRight = false;
+
+    private GameObject newBullet = null;
     protected override void Start()
     {
         base.Start();
+        if (facingRight)
+            Flip();
     }
 
     void Update()
@@ -22,6 +35,9 @@ public class Enemy_Plant : Enemy
 
     private void AttackEvent()
     {
-        Debug.Log("Attack");
+        GameObject newBullet = Instantiate(bulletPrefab, bulletTransform.transform.position, bulletTransform.transform.rotation);
+
+        newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
     }
+
 }
