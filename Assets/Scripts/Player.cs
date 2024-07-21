@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer sr;
 
     [Header("Camera")]
-    [SerializeField] private GameObject camera;
+    [SerializeField] private CinemachineVirtualCamera cinemachineCamera;
     [SerializeField] private float cameraOffsetX = 2f;
     [SerializeField] private float cameraOffsetY = 1f;
     [SerializeField] private float cameraSmoothTime = 0.2f;
@@ -53,6 +54,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+
+        if (cinemachineCamera != null)
+        {
+            cinemachineCamera.Follow = transform;
+        }
     }
 
     void Update()
@@ -64,14 +70,17 @@ public class Player : MonoBehaviour
             return;
         }
 
-        UpdateCameraPosition();
+        if (cinemachineCamera != null)
+        {
+            UpdateCameraPosition();
+        }
 
         DirectionsControllers();
 
         CollisionChecks();
         InputChecks();
         CheckForEnemy();
-        
+
         BufferJumpAndCoyoteJump();
 
         HandleWallSliding();
@@ -128,23 +137,13 @@ public class Player : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        if (camera != null)
+        if (cinemachineCamera != null)
         {
-            Vector3 targetPosition = transform.position;
-
-            if (sr.flipX)
+            CinemachineFramingTransposer transposer = cinemachineCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+            if (transposer != null)
             {
-                targetPosition.x -= cameraOffsetX;
+                transposer.m_TrackedObjectOffset = new Vector3(isFlipped ? -cameraOffsetX : cameraOffsetX, cameraOffsetY, 0);
             }
-            else
-            {
-                targetPosition.x += cameraOffsetX;
-            }
-
-            targetPosition.y += cameraOffsetY;
-            targetPosition.z = camera.transform.position.z;
-
-            camera.transform.position = Vector3.SmoothDamp(camera.transform.position, targetPosition, ref cameraVelocity, cameraSmoothTime);
         }
     }
 
