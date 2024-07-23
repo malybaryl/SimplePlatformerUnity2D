@@ -131,7 +131,7 @@ MonoBehaviour:
   bufferJumpTime: 0.3
   cayoteJumpTime: 0.3
   knockbackDirection: {x: 2, y: 2}
-  knockBackTime: 2
+  knockBackTime: 0.5
   knockBackProtectionTime: 1
   whatIsGround:
     serializedVersion: 2

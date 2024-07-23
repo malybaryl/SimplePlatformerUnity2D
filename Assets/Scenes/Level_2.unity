@@ -695,6 +695,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2831763731649208794, guid: dd04701d8456a5c4ebca302bad19e0d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 5409611882419910026, guid: dd04701d8456a5c4ebca302bad19e0d0, type: 3}
+      propertyPath: groundCheckDistance
+      value: 1.07
+      objectReference: {fileID: 0}
     - target: {fileID: 6598220588723296811, guid: dd04701d8456a5c4ebca302bad19e0d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.36
