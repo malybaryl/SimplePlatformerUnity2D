@@ -10,7 +10,7 @@ public class Enemy_Bat : Enemy
     private Vector2 destination;
     private bool canBeAggresive;
     private bool playerInRange;
-    private Transform player;
+    
     
     [SerializeField]
     private float checkRadious;
@@ -23,13 +23,15 @@ public class Enemy_Bat : Enemy
     protected override void Start()
     {
         base.Start();
-        
-        // not a good way to do it
-        player = GameObject.Find("Player").transform;
-
         defaultSpeed = speed;
 
-        destination = idlePoint[0].position;
+        if (player != null)
+            destination = idlePoint[0].position;
+        else
+        {
+            aggresive = false;
+            canBeAggresive = true;
+        }
         transform.position = idlePoint[0].position;
     }
 

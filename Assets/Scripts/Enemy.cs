@@ -20,6 +20,8 @@ public class Enemy : DamagingObject
     [HideInInspector] public bool invincible;
     protected bool wasHited = false;
 
+    protected Transform player;
+
     [Header("Move info")]
     [SerializeField] protected float speed;
     [SerializeField] protected float idleTime;
@@ -36,6 +38,8 @@ public class Enemy : DamagingObject
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        player = Player_Menager.instance.currentPlayer.transform;
     }
 
     protected virtual void WalkAround()
